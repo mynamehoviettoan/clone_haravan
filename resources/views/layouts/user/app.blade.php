@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="dist/output.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    @include('layout.header')
+    @include('layouts.user.header')
     @stack('styles')
 </head>
 
 <body>
     <div class="container mx-auto">
         @yield('content')
-        @include('layout.brand')
+        @include('layouts.user.brand')
     </div>
-    @include('layout.footer')
+    @include('layouts.user.footer')
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>

@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.user.app')
 @section('content')
 <section class="py-4 bg-gray-100">
     <div class="container mx-auto px-12">

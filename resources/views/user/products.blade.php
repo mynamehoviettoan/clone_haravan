@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.user.app')
 @section('content')
 <div class="w-full mx-auto md:block top-0 mx-auto px-12">
     <section class="py-4 bg-gray-100">
@@ -20,7 +20,6 @@
     </section>
     <div class="container mx-auto px-4 py-10">
         <div class="grid grid-cols-12 gap-4">
-
             <aside class="col-span-3">
                 <!-- Danh mục -->
                 <div class="p-0 rounded-2xl border-2 mb-4">
@@ -227,7 +226,7 @@
                             </div>
 
                             <!-- Tên sản phẩm -->
-                            <p class="mt-4 text-gray-700 text-center">Chanh Dây đỏ Úc</p>
+                            <p class="mt-4 text-gray-700 text-center"><a href="{{('/productsdetails')}}">hanh Dây đỏ Úc</a></p>
 
                             <!-- Giá sản phẩm -->
                             <p class="text-orange-500 font-bold text-lg text-center">

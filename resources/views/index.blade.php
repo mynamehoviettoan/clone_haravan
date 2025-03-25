@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.user.app')
 @section('content')
 <section class="container mx-auto px-12 py-10">
     <div class="grid grid-cols-12 gap-4">

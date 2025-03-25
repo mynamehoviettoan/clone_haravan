@@ -1,107 +1,99 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-    
-    <!-- swiper -->
-<script>
-    var swiper1 = new Swiper(".mySwiper1", {
-        slidesPerView: 3,
-        spaceBetween: 20,
-        loop: true,
-        navigation: {
-            nextEl: ".swiper-button-next1",
-            prevEl: ".swiper-button-prev1",
-        },
-        pagination: {
-            el: ".swiper-pagination1",
-            clickable: true,
-        },
-        breakpoints: {
-            1024: { slidesPerView: 3 },
-            768: { slidesPerView: 2 },
-            640: { slidesPerView: 1 },
-        }
-    });
+@extends('layouts.user.app')
+@section('content')
+<section class="py-4 bg-gray-100">
+    <div class="container mx-auto px-12">
+        <nav>
+            <ol class="flex items-center space-x-2 text-sm text-gray-600">
+                <li>
+                    <a href="/" class="hover:text-blue-500 transition duration-200 font-medium">
+                        Trang chủ
+                    </a>
+                </li>
+                <li>
+                    <span class="text-gray-400"> <i class="fa fa-angle-right"></i> </span>
+                </li>
+                <li class="font-semibold text-gray-800">Liên hệ</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+<div class="container mx-auto px-12 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Form liên hệ -->
+        <div>
+            <h2 class="text-xl mb-4 text-gray-600">Gửi tin nhắn cho chúng tôi</h2>
+            <form action="/contact" method="post" class="space-y-4 bg-white p-6 shadow-md rounded-lg">
+                <input type="hidden" name="form_type" value="contact">
+                <input type="hidden" name="utf8" value="✓">
+                <p id="errorFills" class="text-red-500 text-sm"></p>
 
-    var swiper2 = new Swiper(".mySwiper2", {
-        loop: true,
-        navigation: {
-            nextEl: ".swiper-button-next2",
-            prevEl: ".swiper-button-prev2",
-        },
-    });
+                <input type="text" name="contact[name]" placeholder="Họ tên*" required
+                    class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <input type="email" name="contact[email]" placeholder="Email*" required
+                    class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <input type="tel" name="contact[phone]" placeholder="Điện thoại*" required
+                    class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <textarea name="contact[body]" placeholder="Nhập nội dung*" rows="6" required
+                    class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
 
-// danh mục -xem thêm
+                <button type="submit" class="px-8 bg-[rgb(128,187,53)] text-white py-2 rounded-md hover:bg-[rgba(128,187,53,0.8)]">Gửi liên hệ</button>
+            </form>
+        </div>
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const hiddenItems = document.getElementById("hidden-items");
-        const xemThem = document.getElementById("xem-them");
-        const thuGon = document.getElementById("thu-gon");
+        <!-- Thông tin liên hệ -->
+        <div class="space-y-4">
+            <div class="flex items-start space-x-4">
+                <i class="fa fa-map-marker text-[rgb(128,187,53)] text-2xl"></i>
+                <div>
+                    <label class="font-bold">Địa chỉ liên hệ</label>
+                    <p>268 Cầu Giấy, Quận Cầu Giấy, Hà Nội, Vietnam</p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-4">
+                <i class="fa fa-phone text-[rgb(128,187,53)] text-2xl"></i>
+                <div>
+                    <label class="font-bold">Số điện thoại</label>
+                    <a href="tel:0912117494" class="block text-blue-500 hover:underline">0912117494</a>
+                    <p>Thứ 2 - Chủ nhật: 9:00 - 18:00</p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-4">
+                <i class="fa fa-envelope text-[rgb(128,187,53)] text-2xl"></i>
+                <div>
+                    <label class="font-bold">Email</label>
+                    <a href="mailto:dualeotheme@gmail.com" class="block text-blue-500 hover:underline">dualeotheme@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        xemThem.addEventListener("click", function() {
-            hiddenItems.classList.remove("hidden");
-            xemThem.classList.add("hidden");
-            thuGon.classList.remove("hidden");
-        });
+    <!-- Google Map -->
+    <!-- Phần hiển thị bản đồ và info-panel -->
+    <div class="container mx-auto py-6">
+        <h3 class="text-xl font-semibold mb-4">OpenStreetMap with Marker</h3>
+        <div class="relative h-[500px] w-full">
+            <!-- Bản đồ -->
+            <!-- <div id="map" class="h-full w-full"></div> -->
+            <div id="map" class="h-[500px] w-full rounded-lg shadow-md border border-gray-200"></div>
+            <!-- Tooltip dính trên bản đồ -->
+            <div id="zoom-info" class="absolute top-2 left-1/2 transform -translate-x-1/2 bg-black text-white p-2 rounded-md shadow-md text-sm z-10">
+                🔍 Giữ <strong>Ctrl</strong> và lăn chuột để phóng to/thu nhỏ
+            </div>
 
-        thuGon.addEventListener("click", function() {
-            hiddenItems.classList.add("hidden");
-            xemThem.classList.remove("hidden");
-            thuGon.classList.add("hidden");
-        });
-    });
+            <!-- Info Panel -->
+            <div id="info-panel" class="absolute top-2 left-2 bg-white p-3 shadow-md border border-gray-300 text-sm z-[888]">
+                Thông tin sẽ hiển thị ở đây.
+            </div>
 
-
-// menu-scroll on page
-
-    const topbar = document.getElementById("topbar");
-const headerContainer = document.getElementById("header-container");
-const navbar = document.getElementById("navbar");
-let lastScrollY = window.scrollY;
-
-window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
-
-    if (currentScrollY > lastScrollY) {
-        // Cuộn xuống -> Ẩn topbar và header container, navbar cố định
-        topbar.classList.add("hidden-topbar");
-        headerContainer.classList.add("hidden-topbar");
-        navbar.classList.add("nav-fixed");
-    } else {
-        // Cuộn lên -> Giữ navbar cố định, hiện lại topbar và header container
-        topbar.classList.remove("hidden-topbar");
-        headerContainer.classList.remove("hidden-topbar");
-        navbar.classList.add("nav-fixed");
-    }
-
-    // Nếu quay về top (scrollY = 0) -> Trả navbar về vị trí cũ
-    if (currentScrollY === 0) {
-        navbar.classList.remove("nav-fixed");
-    }
-
-    lastScrollY = currentScrollY;
-});
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- about -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        </div>
+    </div>
+    @endsection
+    @push('styles')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    @endpush()
+    @push('script')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         function initMap() {
             var map = L.map('map', {
@@ -210,6 +202,4 @@ window.addEventListener("scroll", () => {
             initMap();
         });
     </script>
-    <!-- about -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @endpush()

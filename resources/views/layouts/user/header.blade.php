@@ -122,7 +122,7 @@
                    <ul class="flex h-full justify-between items-center [&>li]:px-4 text-lg">
                        <!-- Trang chủ -->
                        <li class="group relative hover:bg-[rgb(254,151,5)] text-white h-full items-center justify-center">
-                           <a href="{{url('/home')}}" class="nav-link flex items-center w-full h-full">Trang chủ <i class="fa fa-angle-right ml-2"></i></a>
+                           <a href="{{route('web.index')}}" class="nav-link flex items-center w-full h-full">Trang chủ <i class="fa fa-angle-right ml-2"></i></a>
                            <!-- pseudo -->
                            <!-- <div class="absolute p-1 left-0 w-full bg-transparent"></div> -->
                            <ul class="mt-0 text-black absolute left-0 hidden group-hover:block bg-white shadow-lg w-48">
@@ -135,7 +135,7 @@
                        <!-- Sản phẩm (Mega Menu) -->
                        <li class="group z-10 h-full items-center justify-center hover:bg-[rgb(254,151,5)]">
                            <!-- <div class="top-full left-0 w-full bg-black"></div> -->
-                           <a href="{{('/products')}}" class="nav-link flex items-center h-full w-full text-white">Sản phẩm <i class="fa fa-angle-right ml-2"></i></a>
+                           <a href="{{route('web.products')}}" class="nav-link flex items-center h-full w-full text-white">Sản phẩm <i class="fa fa-angle-right ml-2"></i></a>
                            <!-- pseudo -->
                            <!-- <div class="absolute p-1 w-20 bg-green-500"></div> -->
                            <div class="h-[50vh] mt-0 absolute left-0 hidden group-hover:flex bg-white shadow-lg w-full p-4 rounded-md">
@@ -144,10 +144,10 @@
                                    <div>
                                        <h2 class="font-bold text-lg">Rau củ</h2>
                                        <ul class="mt-4 space-y-6">
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Rau củ sạch</a></li>
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Rau củ Đà Lạt</a></li>
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Rau củ nhập khẩu</a></li>
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Rau củ theo mùa</a></li>
+                                           <li><a href="{{('/products')}}" class="block hover:text-blue-500">Rau củ sạch</a></li>
+                                           <li><a href="{{('/products')}}" class="block hover:text-blue-500">Rau củ Đà Lạt</a></li>
+                                           <li><a href="{{('/products')}}" class="block hover:text-blue-500">Rau củ nhập khẩu</a></li>
+                                           <li><a href="{{('/products')}}" class="block hover:text-blue-500">Rau củ theo mùa</a></li>
                                        </ul>
                                    </div>
 
@@ -155,10 +155,10 @@
                                    <div>
                                        <h2 class="font-bold text-lg">Hoa quả</h2>
                                        <ul class="mt-4 space-y-6">
-                                           <li><a href="/" class="block hover:text-blue-500">Hoa quả Úc</a></li>
-                                           <li><a href="/" class="block hover:text-blue-500">Hoa quả Miền Nam</a></li>
-                                           <li><a href="/" class="block hover:text-blue-500">Hoa quả theo mùa</a></li>
-                                           <li><a href="/" class="block hover:text-blue-500">Hoa quả nhập khẩu</a></li>
+                                           <li><a href="{{('/home')}}" class="block hover:text-blue-500">Hoa quả Úc</a></li>
+                                           <li><a href="{{('/home')}}" class="block hover:text-blue-500">Hoa quả Miền Nam</a></li>
+                                           <li><a href="{{('/home')}}" class="block hover:text-blue-500">Hoa quả theo mùa</a></li>
+                                           <li><a href="{{('/home')}}" class="block hover:text-blue-500">Hoa quả nhập khẩu</a></li>
                                        </ul>
                                    </div>
 
@@ -188,10 +188,9 @@
                        </li>
 
                        <!-- Các mục khác -->
-                       <li class="hover:bg-[rgb(254,151,5)] h-full items-center flex"><a href="/blogs/news" class="nav-link text-white">Tin tức</a></li>
-                       <li class="hover:bg-[rgb(254,151,5)] h-full items-center flex"><a href="{{('/about')}}" class="nav-link text-white">Giới thiệu</a></li>
-                       <li class="hover:bg-[rgb(254,151,5)] h-full items-center flex"><a href="{{('/contact')}}" class="nav-link text-white">Liên hệ</a></li>
-                       <li class="hover:bg-[rgb(254,151,5)] h-full items-center flex"><a href="/pages/preview" class="nav-link text-white">Demo Tùy chọn</a></li>
+                       <li class="hover:bg-[rgb(254,151,5)] h-full items-center flex"><a href="{{route('web.news')}}" class="nav-link text-white">Tin tức</a></li>
+                       <li class="hover:bg-[rgb(254,151,5)] h-full items-center flex"><a href="{{route('web.about')}}" class="nav-link text-white">Giới thiệu</a></li>
+                       <li class="hover:bg-[rgb(254,151,5)] h-full items-center flex"><a href="{{route('web.contact')}}" class="nav-link text-white">Liên hệ</a></li>
                    </ul>
                    <div class="header_search search_form relative">
                        <form class="flex items-center bg-white rounded-xl py-1" action="/search" method="get" role="search">
