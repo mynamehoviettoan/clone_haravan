@@ -10,21 +10,25 @@
             <div class="mt-3">
                 <ul class="grid grid-cols-1 gap-2 transition-all duration-300" id="category-list">
                     <li class="text-xl font-bold text-gray-800">Danh mục</li>
-                    <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Rau tươi sạch</a></li>
-                    <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Thịt tươi sạch</a></li>
-                    <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Hải sản tươi sống</a></li>
-                    <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Hải sản nhập khẩu</a></li>
-                    <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Trái cây miền Nam</a></li>
-                    <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Hoa quả sạch</a></li>
 
-                    <!-- Các item ẩn -->
+                    {{-- Danh mục hiển thị mặc định --}}
+                    @foreach($visibleCategories as $category)
+                    <li class="nav-item py-2">
+                        <i class="fa fa-arrow-circle-right text-green-500"></i>
+                        <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">{{ $category->name }}</a>
+                    </li>
+                    @endforeach
+
+                    {{-- Danh mục ẩn --}}
                     <div id="hidden-items" class="grid grid-cols-1 gap-2 hidden">
-                        <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Hàng nhập khẩu</a></li>
-                        <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Rau quả Đà Lạt</a></li>
-                        <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Sản phẩm nổi bật</a></li>
-                        <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Sản phẩm khuyến mãi</a></li>
-                        <li class="nav-item py-2"><i class="fa fa-arrow-circle-right text-green-500"></i> <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">Tất cả sản phẩm</a></li>
+                        @foreach($hiddenCategories as $category)
+                        <li class="nav-item py-2">
+                            <i class="fa fa-arrow-circle-right text-green-500"></i>
+                            <a class="nav-link text-gray-700 hover:text-green-600 transition" href="#">{{ $category->name }}</a>
+                        </li>
+                        @endforeach
                     </div>
+
                     <!-- Nút Xem thêm -->
                     <li id="xem-them" class="hover:underline cursor-pointer py-2">
                         <i class="fa fa-arrow-circle-right"></i>
@@ -37,6 +41,7 @@
                         <span> Thu gọn</span>
                     </li>
                 </ul>
+
             </div>
         </aside>
         <!-- Slider banner -->

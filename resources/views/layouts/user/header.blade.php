@@ -141,48 +141,23 @@
                            <div class="h-[50vh] mt-0 absolute left-0 hidden group-hover:flex bg-white shadow-lg w-full p-4 rounded-md">
                                <div class="grid grid-cols-4 gap-6 w-full">
                                    <!-- Rau củ -->
+                                   @foreach($visibleCategories as $category)
                                    <div>
-                                       <h2 class="font-bold text-lg">Rau củ</h2>
+                                       <h2 class="font-bold text-lg">{{ $category->name }}</h2>
                                        <ul class="mt-4 space-y-6">
-                                           <li><a href="{{('/products')}}" class="block hover:text-blue-500">Rau củ sạch</a></li>
-                                           <li><a href="{{('/products')}}" class="block hover:text-blue-500">Rau củ Đà Lạt</a></li>
-                                           <li><a href="{{('/products')}}" class="block hover:text-blue-500">Rau củ nhập khẩu</a></li>
-                                           <li><a href="{{('/products')}}" class="block hover:text-blue-500">Rau củ theo mùa</a></li>
+                                           @forelse($category->products->take(4) as $product)
+                                           <li>
+                                               <a href="{{ url('/products', $product->id) }}" class="block hover:text-blue-500">
+                                                   {{ $product->name }}
+                                               </a>
+                                           </li>
+                                           @empty
+                                           <li class="text-gray-500">Chưa có sản phẩm nào</li>
+                                           @endforelse
                                        </ul>
                                    </div>
+                                   @endforeach
 
-                                   <!-- Hoa quả -->
-                                   <div>
-                                       <h2 class="font-bold text-lg">Hoa quả</h2>
-                                       <ul class="mt-4 space-y-6">
-                                           <li><a href="{{('/home')}}" class="block hover:text-blue-500">Hoa quả Úc</a></li>
-                                           <li><a href="{{('/home')}}" class="block hover:text-blue-500">Hoa quả Miền Nam</a></li>
-                                           <li><a href="{{('/home')}}" class="block hover:text-blue-500">Hoa quả theo mùa</a></li>
-                                           <li><a href="{{('/home')}}" class="block hover:text-blue-500">Hoa quả nhập khẩu</a></li>
-                                       </ul>
-                                   </div>
-
-                                   <!-- Thịt -->
-                                   <div>
-                                       <h2 class="font-bold text-lg">Thịt</h2>
-                                       <ul class="mt-4 space-y-6">
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Thịt bò mỹ</a></li>
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Thịt đà điểu</a></li>
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Thịt heo sạch</a></li>
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Thịt các loại</a></li>
-                                       </ul>
-                                   </div>
-
-                                   <!-- Hải sản -->
-                                   <div>
-                                       <h2 class="font-bold text-lg">Hải sản</h2>
-                                       <ul class="mt-4 space-y-6">
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Tôm hùm Alaska</a></li>
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Tôm hùm Canada</a></li>
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Kingcrab</a></li>
-                                           <li><a href="/collections/all" class="block hover:text-blue-500">Hải sản trong nước</a></li>
-                                       </ul>
-                                   </div>
                                </div>
                            </div>
                        </li>

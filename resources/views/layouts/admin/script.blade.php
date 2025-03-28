@@ -9,6 +9,7 @@
 </script>
 <script src="https://kit.fontawesome.com/8c204d0fdf.js" crossorigin="anonymous"></script>
 <script src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
+<!-- <script src="https://cdn.tailwindcss.com"></script> -->
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script>
     CKEDITOR.replace('editor');

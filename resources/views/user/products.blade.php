@@ -40,10 +40,12 @@
                                 Sản phẩm <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="hidden group-hover:block ml-4 mt-1 space-y-1">
-                                <li><a class="block p-2 text-sm hover:bg-gray-200 rounded" href="#">Rau củ</a></li>
-                                <li><a class="block p-2 text-sm hover:bg-gray-200 rounded" href="#">Hoa quả</a></li>
+                                @foreach($category as $categories)
+                                <li><a class="block p-2 text-sm hover:bg-gray-200 rounded" href="#">{{$categories -> name}}</a></li>
+                                @endforeach
+                                <!-- <li><a class="block p-2 text-sm hover:bg-gray-200 rounded" href="#">Hoa quả</a></li>
                                 <li><a class="block p-2 text-sm hover:bg-gray-200 rounded" href="#">Thịt</a></li>
-                                <li><a class="block p-2 text-sm hover:bg-gray-200 rounded" href="#">Hải sản</a></li>
+                                <li><a class="block p-2 text-sm hover:bg-gray-200 rounded" href="#">Hải sản</a></li> -->
                             </ul>
                         </li>
                         <li><a href="/blogs/news" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">Tin tức</a></li>
@@ -205,154 +207,102 @@
 
                     <section class="products-view [&>product-box]:p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         <!-- Product Card -->
-                        <!-- product_1 -->
-                        <div class="product-box relative py-8 mt-8 border rounded-lg shadow hover:shadow-lg transition">
+                        @foreach($products as $product)
+                        <div class="product-box relative mt-8 border rounded-lg shadow hover:shadow-lg transition">
                             <!-- Hình ảnh sản phẩm -->
                             <div class="relative group">
                                 <!-- Nhãn giảm giá -->
-                                <span class="absolute mt-2 text-white text-sm px-3 py-1 bg-[rgb(254,151,5)]">-13%</span>
-                                <img src="{{asset('assets/images/cachua.png')}}" alt="Ca Chua" class="w-full h-40 object-cover rounded">
+                                <div class="relative group">
+                                    <!-- Kiểm tra nếu có giá gốc thì hiển thị giảm giá -->
+                                    @if ($product->original_price && $product->original_price > $product->price)
+                                    @php
+                                    $discount = round((($product->original_price - $product->price) / $product->original_price) * 100);
+                                    @endphp
+                                    <span class="absolute mt-2 text-white text-sm px-3 py-1 bg-[rgb(254,151,5)]">
+                                        -{{ $discount }}%
+                                    </span>
+                                    @endif
+
+                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}" class="w-full h-60 object-cover rounded">
+                                </div>
 
                                 <!-- Nút giỏ hàng và xem nhanh -->
                                 <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
                                     <button class="btn-cart btn btn-primary mx-2 p-2 bg-orange-500 text-white rounded-full shadow-md hover:bg-orange-600" data-toggle="tooltip" title="Đặt hàng">
                                         <i class="fa fa-shopping-bag"></i>
                                     </button>
-                                    <a href="" data-toggle="tooltip" title="Xem nhanh"
-                                        class="btn_view open-modal-btn quick-view mx-2 p-2 bg-gray-500 text-white rounded-full shadow-md hover:bg-gray-600">
+                                    <a href="javascript:void(0);" class="btn_view open-modal-btn quick-view mx-2 p-2 bg-gray-500 text-white rounded-full shadow-md hover:bg-gray-600"
+                                        data-toggle="tooltip" title="Xem nhanh" data-product-id="{{ $product->id }}">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 </div>
                             </div>
 
                             <!-- Tên sản phẩm -->
-                            <p class="mt-4 text-gray-700 text-center"><a href="{{('/productsdetails')}}">hanh Dây đỏ Úc</a></p>
+                            <p class="mt-4 text-gray-700 text-center"><a href="{{('/productsdetails')}}">{{ $product->name }}</a></p>
 
                             <!-- Giá sản phẩm -->
                             <p class="text-orange-500 font-bold text-lg text-center">
-                                400,000đ <span class="text-gray-400 line-through text-sm">460,000đ</span>
+                                {{ number_format($product->price) }} <span class="text-gray-400 line-through text-sm">{{$product -> original_price}}</span>
                             </p>
-
                         </div>
-                        <!-- detail product_1 -->
-                        <div class="hidden product-modal inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+
+                        <!-- MODAL CHO SẢN PHẨM -->
+                        <div id="product-modal-{{ $product->id }}" class="hidden product-modal inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                             <div class="bg-white p-6 rounded-lg shadow-lg w-3/4 md:w-2/3 lg:w-1/2 relative">
                                 <!-- Close button -->
-                                <button class="absolute top-2 right-2 text-xl font-bold text-gray-700 hover:text-red-500">&times;</button>
+                                <button class="absolute top-2 right-2 text-xl font-bold text-gray-700 hover:text-red-500 close-modal-btn">&times;</button>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <!-- Left: Product Image & Thumbnails -->
                                     <div>
                                         <div class="mb-4">
-                                            <img id="product-featured-image-quickview" class="w-full h-auto rounded" src="https://product.hstatic.net/1000324420/product/upload_963fbe98fc324f47b37e38a3481c22e1.jpg" alt="quickview">
+                                            <img id="product-featured-image-quickview" class="w-full h-60 rounded" src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{$product->name}}">
                                         </div>
                                         <div class="flex gap-2 overflow-x-auto">
-                                            <img class="w-20 h-20 cursor-pointer border-2 border-transparent hover:border-green-500 rounded" src="//product.hstatic.net/1000324420/product/upload_963fbe98fc324f47b37e38a3481c22e1_compact.jpg" alt="thumb">
-                                            <img class="w-20 h-20 cursor-pointer border-2 border-transparent hover:border-green-500 rounded" src="//product.hstatic.net/1000324420/product/upload_b191e9fa359e4fd49b24e591545e7a79_compact.jpg" alt="thumb">
-                                            <img class="w-20 h-20 cursor-pointer border-2 border-transparent hover:border-green-500 rounded" src="//product.hstatic.net/1000324420/product/upload_4bdb98100d0342bf9f5314f89e71d937_compact.jpg" alt="thumb">
+                                            @foreach(json_decode($product->album, true) as $image)
+                                            <img class="w-20 h-20 cursor-pointer border-2 border-transparent hover:border-green-500 rounded"
+                                                src="{{ asset('storage/' . $image) }}"
+                                                alt="{{ $product->name }}">
+                                            @endforeach
                                         </div>
                                     </div>
 
                                     <!-- Right: Product Details -->
                                     <div>
-                                        <h2 class="text-2xl font-bold mb-2">Chanh Dây đỏ Úc</h2>
-                                        <div class="text-green-600 font-semibold text-xl">400,000₫</div>
-                                        <div class="text-gray-500 line-through">460,000₫ <span class="text-red-500">(-14%)</span></div>
-                                        <div class="mt-2 text-gray-600">Trạng thái: <span class="text-green-500"><i class="fa fa-check"></i> Còn hàng</span></div>
-                                        <p class="mt-4 text-sm">Giá trị dinh dưỡng: Nho tươi cung cấp vitamin A, C, calcium và sắt giúp duy trì sức khỏe, tốt cho tim mạch.</p>
+                                        <h2 class="text-2xl font-bold mb-2">{{$product->name}}</h2>
+                                        <div class="text-green-600 font-semibold text-xl">{{$product->price}}</div>
+                                        @if ($product->original_price && $product->original_price > $product->price)
+                                        @php
+                                        $discount = round((($product->original_price - $product->price) / $product->original_price) * 100);
+                                        @endphp
+                                        <span class="text-red-500 bg-yellow-500">-{{ $discount }}%</span>
+                                        <div class="text-gray-500 line-through">{{$product -> original_price}}</div>
+                                        @endif
+                                        <div class="mt-2 text-gray-600">Trạng thái: <span class="text-green-500"><i class="fa fa-check"></i> {{$product->status}}</span></div>
+                                        <p class="mt-4 text-sm">{{$product->short_description}}</p>
                                         <p class="mt-2 text-gray-700"><strong>Hãng sản xuất:</strong> Canada</p>
 
                                         <!-- Quantity & Add to Cart -->
                                         <div class="mt-4 flex items-center gap-4">
-                                            <label for="quantity" class="font-medium">Số lượng</label>
-                                            <input type="number" id="quantity" name="quantity" value="1" class="w-16 text-center border border-gray-300 rounded">
+                                            <label for="quantity-{{ $product->id }}" class="font-medium">Số lượng</label>
+                                            <input type="number" id="quantity-{{ $product->id }}" name="quantity" value="1" class="w-16 text-center border border-gray-300 rounded">
                                         </div>
                                         <button class="mt-4 w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">Thêm vào giỏ hàng</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
+
+
+
                         <!-- product_2 -->
-                        <div class="product-box relative mt-8 border rounded-lg shadow hover:shadow-lg transition">
-                            <!-- Hình ảnh sản phẩm -->
-                            <div class="relative group">
-                                <img src="{{asset('assets/images/cachua.png')}}" alt="Ca Chua" class="w-full h-40 object-cover rounded">
 
-                                <!-- Nút giỏ hàng và xem nhanh -->
-                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                                    <button class="btn-cart btn btn-primary mx-2 p-2 bg-orange-500 text-white rounded-full shadow-md hover:bg-orange-600" data-toggle="tooltip" title="Đặt hàng">
-                                        <i class="fa fa-shopping-bag"></i>
-                                    </button>
-                                    <a href="/products/chanh-day-do-uc" data-toggle="tooltip" title="Xem nhanh"
-                                        class="btn_view open-modal-btn quick-view mx-2 p-2 bg-gray-500 text-white rounded-full shadow-md hover:bg-gray-600">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <!-- Tên sản phẩm -->
-                            <p class="mt-4 text-gray-700 text-center">Chanh Dây đỏ Úc</p>
-
-                            <!-- Giá sản phẩm -->
-                            <p class="text-orange-500 font-bold text-lg text-center">
-                                400,000đ <span class="text-gray-400 line-through text-sm">460,000đ</span>
-                            </p>
-
-                        </div>
                         <!-- product_3 -->
-                        <div class="product-box relative mt-8 border rounded-lg shadow hover:shadow-lg transition">
-                            <!-- Hình ảnh sản phẩm -->
-                            <div class="relative group">
-                                <img src="{{asset('assets/images/cachua.png')}}" alt="Ca Chua" class="w-full h-40 object-cover rounded">
 
-                                <!-- Nút giỏ hàng và xem nhanh -->
-                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                                    <button class="btn-cart btn btn-primary mx-2 p-2 bg-orange-500 text-white rounded-full shadow-md hover:bg-orange-600" data-toggle="tooltip" title="Đặt hàng">
-                                        <i class="fa fa-shopping-bag"></i>
-                                    </button>
-                                    <a href="/products/chanh-day-do-uc" data-toggle="tooltip" title="Xem nhanh"
-                                        class="btn_view quick-view mx-2 p-2 bg-gray-500 text-white rounded-full shadow-md hover:bg-gray-600">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <!-- Tên sản phẩm -->
-                            <p class="mt-4 text-gray-700 text-center">Chanh Dây đỏ Úc</p>
-
-                            <!-- Giá sản phẩm -->
-                            <p class="text-orange-500 font-bold text-lg text-center">
-                                400,000đ <span class="text-gray-400 line-through text-sm">460,000đ</span>
-                            </p>
-
-                        </div>
                         <!-- product_4 -->
-                        <div class="product-box relative mt-8 border rounded-lg shadow hover:shadow-lg transition">
-                            <!-- Hình ảnh sản phẩm -->
-                            <div class="relative group">
-                                <img src="{{asset('assets/images/cachua.png')}}" alt="Ca Chua" class="w-full h-40 object-cover rounded">
 
-                                <!-- Nút giỏ hàng và xem nhanh -->
-                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                                    <button class="btn-cart btn btn-primary mx-2 p-2 bg-orange-500 text-white rounded-full shadow-md hover:bg-orange-600" data-toggle="tooltip" title="Đặt hàng">
-                                        <i class="fa fa-shopping-bag"></i>
-                                    </button>
-                                    <a href="/products/chanh-day-do-uc" data-toggle="tooltip" title="Xem nhanh"
-                                        class="btn_view quick-view mx-2 p-2 bg-gray-500 text-white rounded-full shadow-md hover:bg-gray-600">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <!-- Tên sản phẩm -->
-                            <p class="mt-4 text-gray-700 text-center">Chanh Dây đỏ Úc</p>
-
-                            <!-- Giá sản phẩm -->
-                            <p class="text-orange-500 font-bold text-lg text-center">
-                                400,000đ <span class="text-gray-400 line-through text-sm">460,000đ</span>
-                            </p>
-
-                        </div>
 
                         <!-- More products can follow this structure -->
 
@@ -385,29 +335,34 @@
     };
 
     document.addEventListener("DOMContentLoaded", () => {
-        const modal = document.querySelector(".product-modal");
         const quickViewButtons = document.querySelectorAll(".quick-view");
-        const closeButton = document.querySelector(".product-modal button");
 
-        // Mở modal khi nhấp vào nút "Xem nhanh"
         quickViewButtons.forEach(button => {
             button.addEventListener("click", (e) => {
                 e.preventDefault();
-                modal.classList.remove("hidden");
-                modal.classList.add("fixed");
+
+                // Lấy ID modal từ data attribute
+                const productId = button.getAttribute("data-product-id");
+                const modal = document.getElementById(`product-modal-${productId}`);
+
+                if (modal) {
+                    modal.classList.remove("hidden");
+                    modal.classList.add("fixed");
+
+                    // Đóng modal khi bấm nút "X"
+                    const closeButton = modal.querySelector("button");
+                    closeButton.addEventListener("click", () => {
+                        modal.classList.add("hidden");
+                    });
+
+                    // Đóng modal khi click ra ngoài
+                    modal.addEventListener("click", (e) => {
+                        if (e.target === modal) {
+                            modal.classList.add("hidden");
+                        }
+                    });
+                }
             });
-        });
-
-        // Đóng modal khi bấm nút "X"
-        closeButton.addEventListener("click", () => {
-            modal.classList.add("hidden");
-        });
-
-        // Đóng modal khi click ra ngoài phần modal
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.classList.add("hidden");
-            }
         });
     });
 </script>
